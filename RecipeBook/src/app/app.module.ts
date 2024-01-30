@@ -14,6 +14,8 @@ import { DropdownDirective } from './dropdown.directive';
 import { EmployeelistComponent } from './employeelist/employeelist.component';
 import { EmployeedetailComponent } from './employeedetail/employeedetail.component';
 import { EmployeeService } from './employee.service';
+import { AppRoutingModule } from './app-routing.module';
+
 
 
 @NgModule({
@@ -34,7 +36,7 @@ import { EmployeeService } from './employee.service';
   imports: [
     BrowserModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,AppRoutingModule
   ],
   providers: [EmployeeService],
   bootstrap: [AppComponent]
