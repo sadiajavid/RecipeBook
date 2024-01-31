@@ -15,6 +15,7 @@ import { EmployeelistComponent } from './employeelist/employeelist.component';
 import { EmployeedetailComponent } from './employeedetail/employeedetail.component';
 import { EmployeeService } from './employee.service';
 import { AppRoutingModule } from './app-routing.module';
+import { RecipechildComponent } from './recipes/recipechild/recipechild.component';
 
 
 
@@ -31,6 +32,7 @@ import { AppRoutingModule } from './app-routing.module';
     DropdownDirective,
     EmployeelistComponent,
     EmployeedetailComponent,
+    RecipechildComponent,
   
   ],
   imports: [
