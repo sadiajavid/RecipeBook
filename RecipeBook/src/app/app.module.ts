@@ -16,6 +16,7 @@ import { EmployeedetailComponent } from './employeedetail/employeedetail.compone
 import { EmployeeService } from './employee.service';
 import { AppRoutingModule } from './app-routing.module';
 import { RecipechildComponent } from './recipes/recipechild/recipechild.component';
+import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
 
 
 
@@ -33,6 +34,7 @@ import { RecipechildComponent } from './recipes/recipechild/recipechild.componen
     EmployeelistComponent,
     EmployeedetailComponent,
     RecipechildComponent,
+    RecipeEditComponent,
   
   ],
   imports: [
