@@ -12,7 +12,6 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 export class RecipeDetailComponent implements OnInit {
   @Input() recipe: Recipe;
   id:number
-
   constructor(private recipeService:RecipeService,private router:Router,private route:ActivatedRoute ) { }
 
   ngOnInit() {
@@ -24,5 +23,9 @@ this.recipeService.addIngredientsToShoppingList(this.recipe.ingredients)
   }
   onEditRecipe(){
 this.router.navigate(['edit'],{relativeTo:this.route})
+  }
+  onDeleteRecipe(){
+    this.recipeService.deleteRecipe(this.id)
+    this.router.navigate(["/recipes"])
   }
 }
