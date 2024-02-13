@@ -11,6 +11,7 @@ export class AuthComponent {
   constructor(private authService:AuthService){}
   isLogging=true;
   isLoading=false;
+  error:string=null;
   onSignUp(){
     this.isLogging=!this.isLogging;
   }
@@ -23,15 +24,24 @@ export class AuthComponent {
   this.isLoading=true;
   if(this.isLogging){
     this.authService.onLogin(email,password).subscribe(responseData=>{
-      console.log(responseData)
+      console.log(responseData);
+    
+      this.isLoading=false;
+    },errorMessage=>{
+      console.log(errorMessage)
+      this.error=errorMessage
       this.isLoading=false;
     }
     )
- 
   }else{
   this.authService.onSignUp(email,password).subscribe(responseData=>{
     console.log(responseData)
     this.isLoading=false;
+  }
+  ,errorMessage=>{
+    console.log(errorMessage)
+    this.isLoading=false;
+    this.error=errorMessage
   }
   )
 }
