@@ -1,22 +1,70 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+// import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+// import { DataStorageService } from '../shared/data-storage.service';
+// import { AuthService } from '../auth/auth.service';
+// import { Subscription } from 'rxjs';
+
+// @Component({
+//   selector: 'app-header',
+//   templateUrl: './header.component.html'
+// })
+// export class HeaderComponent implements OnInit ,OnDestroy{
+//   isAuthenticated=false;
+//   userSub:Subscription;
+//   constructor(private dataStorageService:DataStorageService, private authService:AuthService){}
+ 
+//   ngOnInit(){
+//    this.userSub= this.authService.user.subscribe(user=>{
+//       this.isAuthenticated=!!user;
+//     })
+//   }
+//   @Output() featureSelected = new EventEmitter<string>();
+
+//   onSelect(feature: string) {
+//     this.featureSelected.emit(feature);
+//   }
+//   onSaveData(){
+//     this.dataStorageService.storeRecipes()
+//   }
+//   onFetchData(){
+//     this.dataStorageService.fetchRecipe()
+//   }
+//   ngOnDestroy() {
+//     this.userSub.unsubscribe();
+//     }
+// }
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+
 import { DataStorageService } from '../shared/data-storage.service';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html'
 })
-export class HeaderComponent {
-  constructor(private dataStorageService:DataStorageService){}
-  @Output() featureSelected = new EventEmitter<string>();
+export class HeaderComponent implements OnInit, OnDestroy {
+  isAuthenticated = false;
+  private userSub: Subscription;
 
-  onSelect(feature: string) {
-    this.featureSelected.emit(feature);
+  constructor(
+    private dataStorageService: DataStorageService,
+    private authService: AuthService
+  ) {}
+
+  ngOnInit() {
+    this.userSub = this.authService.user.subscribe(user => {
+      this.isAuthenticated = !!user;
+    });
   }
-  onSaveData(){
-    
-    this.dataStorageService.storeRecipes()
+
+  onSaveData() {
+    this.dataStorageService.storeRecipes();
   }
-  onFetchData(){
+
+  onFetchData() {
     this.dataStorageService.fetchRecipe()
+  }
+  ngOnDestroy() {
+    this.userSub.unsubscribe();
   }
 }

@@ -21,7 +21,7 @@
                 <button class="btn btn-danger"   [disabled]="!auth.valid" type="submit">
                     {{isLogging ?"Login":"SignUp"}}
                 </button>|
-                <button class="btn btn-danger"  (click)="onSignUp()"type="button">
+                <button class="btn btn-danger"  (click)="onSwitchMode()"type="button">
                   Switchto {{isLogging ?"Sign Up":"Login"}}
                 </button>
            

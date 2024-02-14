@@ -1,22 +1,21 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { throwError } from 'rxjs';
+import { Subject, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { User } from './user.model';
-interface dataAuth{
+ export interface dataAuth{
   idToken:string,
   email:string,
   refreshToken:string,
   expiresIn:string,
   localId:string
 registered?:boolean
-
 }
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  user: any;
+  user = new Subject<User>();
 
   constructor(private http:HttpClient) { }
   onSignUp(email:string,password:string){
@@ -28,28 +27,23 @@ export class AuthService {
     }).pipe(catchError(this.errorHandler ),
     tap(resData=>{
    this.authenticationHandler(resData.email,resData.localId, resData.idToken,+resData.expiresIn)                          
-    }
-    )
-    )
+    }))
   }
- 
     onLogin(email:string,password:string){
       return this.http.post<dataAuth>("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAyaz7NzQRoZp_J7v7VFrZ6kX_KDSWxHEA",{
        email:email,
        password:password,
-       returnSecureToken	:true
+       returnSecureToken:true
  
      }).pipe(catchError(this.errorHandler ),tap(resData=>{
       this.authenticationHandler(resData.email,resData.localId, resData.idToken,+resData.expiresIn)                          
        }))
    } 
-
    private errorHandler(errorRes: HttpErrorResponse) {
     let errorMessage = "An unknown error occurred.";
   
     if (errorRes.error || errorRes.error.error) {
       console.error( errorRes);
-  
       switch (errorRes.error.error.message) {
         case 'EMAIL_EXISTS':
           errorMessage = "This email already exists.";
@@ -70,12 +64,7 @@ export class AuthService {
   }
   private authenticationHandler(email:string,userId:string,token:string,expiresIn:number){
     const expirationDate=new Date (new Date().getTime()+ expiresIn*1000);
-
-    const user=new User(email,
-      userId,token,
-      
-      expirationDate)
-
+    const user=new User(email, userId,token, expirationDate)
     this.user.next(user) 
   } 
 }
