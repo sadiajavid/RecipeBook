@@ -38,8 +38,7 @@ authObs.subscribe(responseData=>{
   console.log(errorMessage)
   this.error=errorMessage
   this.isLoading=false;
-}
-)
+})
 form.reset();
 
   }

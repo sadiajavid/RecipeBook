@@ -16,8 +16,8 @@ export class DataStorageService {
    return  this.http.put("https://ng-recipe-book-ba4e8-default-rtdb.firebaseio.com/recipes.json",recipes)
    .subscribe(response=>{
     console.log(response)
-   })
-  }
+   }) }
+   
   fetchRecipe(){
     this.http.get<Recipe[]>("https://ng-recipe-book-ba4e8-default-rtdb.firebaseio.com/recipes.json")
     .pipe(map(recipes=>{
