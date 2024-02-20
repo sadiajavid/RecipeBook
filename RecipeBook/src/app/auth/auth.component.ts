@@ -42,5 +42,4 @@ authObs.subscribe(responseData=>{
 form.reset();
 
   }
- 
 }

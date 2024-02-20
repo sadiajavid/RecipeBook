@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 
 import { RecipesComponent } from './recipes/recipes.component';
@@ -21,6 +21,7 @@ import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { HeaderComponent } from './header/header.component';
 import { AuthComponent } from './auth/auth.component';
+import { AuthInterceptor } from './auth/auth.interceptor';
 
 
 
@@ -50,7 +51,7 @@ import { AuthComponent } from './auth/auth.component';
     ReactiveFormsModule,
     HttpClientModule,AppRoutingModule
   ],
-  providers: [EmployeeService],
+  providers: [EmployeeService,{provide:HTTP_INTERCEPTORS,useClass:AuthInterceptor,multi:true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

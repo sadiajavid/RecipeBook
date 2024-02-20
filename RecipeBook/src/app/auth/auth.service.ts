@@ -1,8 +1,9 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Subject, throwError } from 'rxjs';
+import { BehaviorSubject, Subject, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { User } from './user.model';
+import { Router } from '@angular/router';
  export interface dataAuth{
   idToken:string,
   email:string,
@@ -15,11 +16,12 @@ registered?:boolean
   providedIn: 'root'
 })
 export class AuthService {
-  user = new Subject<User>();
+  user = new BehaviorSubject<User>(null);
 
-  constructor(private http:HttpClient) { }
+
+  constructor(private http:HttpClient,private router:Router) { }
   onSignUp(email:string,password:string){
-     return this.http.post<dataAuth>("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAyaz7NzQRoZp_J7v7VFrZ6kX_KDSWxHEA",{
+     return this.http.post<dataAuth>("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBbc77DQD3MQsNKKpAuosVmxwkK0XY08iY",{
       email:email,
       password:password,
       returnSecureToken	:true
@@ -30,7 +32,7 @@ export class AuthService {
     }))
   }
     onLogin(email:string,password:string){
-      return this.http.post<dataAuth>("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAyaz7NzQRoZp_J7v7VFrZ6kX_KDSWxHEA",{
+      return this.http.post<dataAuth>("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBbc77DQD3MQsNKKpAuosVmxwkK0XY08iY",{
        email:email,
        password:password,
        returnSecureToken:true
@@ -39,6 +41,7 @@ export class AuthService {
       this.authenticationHandler(resData.email,resData.localId, resData.idToken,+resData.expiresIn)                          
        }))
    } 
+  
    private errorHandler(errorRes: HttpErrorResponse) {
     let errorMessage = "An unknown error occurred.";
   
@@ -61,10 +64,15 @@ export class AuthService {
       }
     }
     return throwError(errorMessage);
+    
   }
   private authenticationHandler(email:string,userId:string,token:string,expiresIn:number){
     const expirationDate=new Date (new Date().getTime()+ expiresIn*1000);
     const user=new User(email, userId,token, expirationDate)
     this.user.next(user) 
   } 
+  logout(){
+    this.user.next(null);
+    this.router.navigate(["/auth"])
+   }
 }

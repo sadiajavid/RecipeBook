@@ -6,6 +6,7 @@ import { RecipechildComponent } from "./recipes/recipechild/recipechild.componen
 import { RecipeDetailComponent } from "./recipes/recipe-detail/recipe-detail.component";
 import { RecipeEditComponent } from "./recipes/recipe-edit/recipe-edit.component";
 import { AuthComponent } from "./auth/auth.component";
+// import {  RecipesResolverService } from "./recipes/recipes-resolver";
 
 
 const route:Routes=[{path:"",redirectTo:"/recipes",pathMatch:"full"},{path:"recipes",component:RecipesComponent,

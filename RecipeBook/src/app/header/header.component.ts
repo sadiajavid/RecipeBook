@@ -1,62 +1,30 @@
-// import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
-// import { DataStorageService } from '../shared/data-storage.service';
-// import { AuthService } from '../auth/auth.service';
-// import { Subscription } from 'rxjs';
-
-// @Component({
-//   selector: 'app-header',
-//   templateUrl: './header.component.html'
-// })
-// export class HeaderComponent implements OnInit ,OnDestroy{
-//   isAuthenticated=false;
-//   userSub:Subscription;
-//   constructor(private dataStorageService:DataStorageService, private authService:AuthService){}
- 
-//   ngOnInit(){
-//    this.userSub= this.authService.user.subscribe(user=>{
-//       this.isAuthenticated=!!user;
-//     })
-//   }
-//   @Output() featureSelected = new EventEmitter<string>();
-
-//   onSelect(feature: string) {
-//     this.featureSelected.emit(feature);
-//   }
-//   onSaveData(){
-//     this.dataStorageService.storeRecipes()
-//   }
-//   onFetchData(){
-//     this.dataStorageService.fetchRecipe()
-//   }
-//   ngOnDestroy() {
-//     this.userSub.unsubscribe();
-//     }
-// }
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { DataStorageService } from '../shared/data-storage.service';
 import { AuthService } from '../auth/auth.service';
 
+
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html'
 })
-export class HeaderComponent implements OnInit, OnDestroy {
+export class HeaderComponent {
   isAuthenticated = false;
   private userSub: Subscription;
 
   constructor(
-    private dataStorageService: DataStorageService,
-    private authService: AuthService
+    private dataStorageService: DataStorageService,private authService:AuthService
+
   ) {}
 
   ngOnInit() {
     this.userSub = this.authService.user.subscribe(user => {
-      this.isAuthenticated = !!user;
+         this.isAuthenticated = user ? true : false;
+         console.log(user)
     });
   }
-
   onSaveData() {
     this.dataStorageService.storeRecipes();
   }
@@ -66,5 +34,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy() {
     this.userSub.unsubscribe();
+  }
+  onLogOut(){
+    this.authService.logout();
   }
 }

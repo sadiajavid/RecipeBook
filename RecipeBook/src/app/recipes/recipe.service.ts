@@ -12,18 +12,19 @@ export class RecipeService {
   recipesChanged = new Subject<Recipe[]>();
   length: number;
   constructor(private shoppinglistService:ShoppingListService){}
-  recipeSelected = new Subject<Recipe>();
-  private recipes: Recipe[] = [
-    new Recipe('Crown Crust', 'This is simply a test', '/assets/pic/pizza.jpg',[new Ingredient('Meat',1),new Ingredient('FrenchFries',20)]),
-    new Recipe('Chicken Microni', 'This is simply a test', '/assets/pic/microni.jpg',[new Ingredient('Meat',1),new Ingredient('FrenchFries',20)]),
-    new Recipe('Chicken Tikka', 'This is simply a test', '/assets/pic/chickentikka.jpg',[new Ingredient('Meat',1),new Ingredient('FrenchFries',20)]),
-    new Recipe('cake', 'This is simply a test', '/assets/pic/cake.jpg',[new Ingredient('Meat',1),new Ingredient('buns',20)]),
-    new Recipe('junk food', 'This is simply a test', '/assets/pic/junkfood.jpg',[new Ingredient('Meat',1),new Ingredient('burger',20)])
-  ];  
+  recipeSelected = new Subject<Recipe[]>();
+  // private recipes: Recipe[] = [
+  //   new Recipe('Crown Crust', 'This is simply a test', '/assets/pic/pizza.jpg',[new Ingredient('Meat',1),new Ingredient('FrenchFries',20)]),
+  //   new Recipe('Chicken Microni', 'This is simply a test', '/assets/pic/microni.jpg',[new Ingredient('Meat',1),new Ingredient('FrenchFries',20)]),
+  //   new Recipe('Chicken Tikka', 'This is simply a test', '/assets/pic/chickentikka.jpg',[new Ingredient('Meat',1),new Ingredient('FrenchFries',20)]),
+  //   new Recipe('cake', 'This is simply a test', '/assets/pic/cake.jpg',[new Ingredient('Meat',1),new Ingredient('buns',20)]),
+  //   new Recipe('junk food', 'This is simply a test', '/assets/pic/junkfood.jpg',[new Ingredient('Meat',1),new Ingredient('burger',20)])
+  // ];  
+  private recipes: Recipe[] = [];
   setRecipe(recipes:Recipe[]){
     this.recipes=recipes;
     this.recipesChanged.next(this.recipes.slice())
-    
+
   }
   getRecipes(){
     return this.recipes.slice();
@@ -37,7 +38,6 @@ this.shoppinglistService.addIngredients(ingredients);
 addRecipe(recipe:Recipe){
   this.recipes.push(recipe);
   this.recipesChanged.next(this.recipes.slice())
-
 }
 updateRecipe(index:number,newRecipe:Recipe){
 this.recipes[index]=newRecipe
